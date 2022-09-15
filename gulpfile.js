@@ -12,13 +12,37 @@ const rename = require("gulp-rename");
 const del = require("del");
 const bs = require("browser-sync").create();
 
+const srcPath = 'src/'
+const wwwPath = 'www/'
+
+const path = {
+  build: {
+    html: `${wwwPath}`,
+    js: `${wwwPath}js`,
+    css: `${wwwPath}css`,
+  },
+  src: {
+    html: `${srcPath}*.html`,
+    js: `${srcPath}js/*.js`,
+    css: `${srcPath}scss/*.scss`,
+  },
+  watch: {
+    html: `${srcPath}**/*.html`,
+    js: `${srcPath}**/*.js`,
+    css: `${srcPath}**/*.scss`,
+  },
+  clean: wwwPath,
+  srcPath: srcPath,
+  wwwPath: wwwPath,
+}
+
 // html
 const pages = () => {
   return (
-    src("src/*.html")
+    src(path.src.html)
       .pipe(fileinclude())
       // .pipe(htmlmin({collapseWhitespace: true}))
-      .pipe(dest("www/"))
+      .pipe(dest(path.build.html))
       .pipe(bs.stream())
   );
 };
@@ -26,10 +50,10 @@ exports.pages = pages;
 
 // js
 const scripts = () => {
-  return src("src/js/script.js")
+  return src(path.src.js)
     .pipe(uglify())
-    .pipe(rename("script.min.js"))
-    .pipe(dest("www/js/"))
+    .pipe(rename("script.minimum.js"))
+    .pipe(dest(path.build.js))
     .pipe(bs.stream());
 };
 exports.scripts = scripts;
@@ -37,7 +61,7 @@ exports.scripts = scripts;
 // css
 const styles = () => {
   return (
-    src("src/scss/style.scss")
+    src(path.src.css)
       .pipe(
         plumber({
           errorHandler: notify.onError(function (err) {
@@ -54,7 +78,7 @@ const styles = () => {
       .pipe(autoprefixer(["last 15 versions"]))
       .pipe(sourcemaps.write())
       // .pipe(rename('style.min.css'))
-      .pipe(dest("www/css"))
+      .pipe(dest(path.build.css))
       .pipe(bs.stream())
   );
 };
@@ -63,22 +87,23 @@ exports.styles = styles;
 // browser-sync
 const server = () => {
   bs.init({
-    server: "./www",
+    server: path.wwwPath,
   });
 };
 exports.server = server;
 
 const watchers = () => {
-  watch("src/**/*.scss", styles);
-  watch("src/**/*.html", pages);
+  watch(path.watch.css, styles);
+  watch(path.watch.html, pages);
+  watch(path.watch.js, scripts);
 };
 
 const clean = () => {
-  return del("www/");
+  return del(path.clean);
 };
 
-const build = series(clean, parallel(pages, scripts, styles));
+const build = series(clean, parallel(server,pages, scripts, styles,watchers));
 
 exports.build = build;
 
-exports.default = parallel(server, pages, scripts, styles, watchers);
+exports.default = series(clean, parallel(server,pages, scripts, styles,watchers));

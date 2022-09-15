@@ -20,9 +20,8 @@ $(function() {
 		$this.parent().toggleClass('open');
 
 		if (!e.data.multiple) {
-			$el.find('.submenu').not($next).slideUp().parent().removeClass('open');
+			
 		};
 	}	
 
-	var accordion = new Accordion($('#accordion'), false);
 });
