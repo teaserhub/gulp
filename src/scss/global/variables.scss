@@ -1,0 +1,15 @@
+
+//Переменные
+$blue: #221fbb;
+
+
+// Шаблоны
+%tplborder {
+    border-bottom: 5px solid #000;
+}
+
+// Миксины
+@mixin fonts($fs,$fc) {
+    font-size: $fs;
+    color: $fc;
+}

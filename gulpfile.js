@@ -37,7 +37,7 @@ exports.scripts = scripts;
 // css
 const styles = () => {
   return (
-    src("src/scss/*.scss")
+    src("src/scss/style.scss")
       .pipe(
         plumber({
           errorHandler: notify.onError(function (err) {
