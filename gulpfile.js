@@ -2,6 +2,7 @@ const { series, src, dest, parallel, watch } = require("gulp");
 const htmlmin = require("gulp-html-minifier");
 const uglify = require("gulp-uglify-es").default;
 const sass = require("gulp-sass")(require("sass"));
+const gcmq = require("gulp-group-css-media-queries");
 const postcss = require("gulp-postcss");
 const autoprefixer = require("gulp-autoprefixer");
 const plumber = require("gulp-plumber"); // Отслеживание ошибок
@@ -12,8 +13,8 @@ const rename = require("gulp-rename");
 const del = require("del");
 const bs = require("browser-sync").create();
 
-const srcPath = 'src/'
-const wwwPath = 'www/'
+const srcPath = 'src/';
+const wwwPath = 'www/';
 
 const path = {
   build: {
@@ -74,7 +75,12 @@ const styles = () => {
         })
       )
       .pipe(sourcemaps.init())
-      .pipe(sass())
+      .pipe(sass({
+        indentType: "tab",
+        indentWidth: 1,
+        outputStyle: "expanded",
+      }))
+      .pipe(gcmq())
       .pipe(autoprefixer(["last 15 versions"]))
       .pipe(sourcemaps.write())
       // .pipe(rename('style.min.css'))

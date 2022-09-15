@@ -6,6 +6,9 @@
     &__logo {
         display: flex;
     }
+    @media (max-width: 920px) {
+        width: 80%;
+    }
     // &--active {
     //     background-color: rgb(0, 255, 42);
     // }
