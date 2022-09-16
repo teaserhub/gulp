@@ -3,6 +3,7 @@ const htmlmin = require("gulp-html-minifier");
 const uglify = require("gulp-uglify-es").default;
 const sass = require("gulp-sass")(require("sass"));
 const gcmq = require("gulp-group-css-media-queries");
+const shorthand = require('gulp-shorthand');
 const postcss = require("gulp-postcss");
 const autoprefixer = require("gulp-autoprefixer");
 const plumber = require("gulp-plumber"); // Отслеживание ошибок
@@ -82,8 +83,10 @@ const styles = () => {
       }))
       .pipe(gcmq())
       .pipe(autoprefixer(["last 15 versions"]))
+      .pipe(shorthand())
       .pipe(sourcemaps.write())
       // .pipe(rename('style.min.css'))
+      
       .pipe(dest(path.build.css))
       .pipe(bs.stream())
   );

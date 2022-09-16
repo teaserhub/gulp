@@ -23,7 +23,9 @@
 
 .nav__link {
     display: block;
-    @include fonts(20, #fff);
+    // @include fonts(20, #fff);
+    font-weight: 500;
+    font-style: italic;
     @extend %tplborder;
     margin-top: 10px;
 }
