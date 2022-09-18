@@ -3,19 +3,18 @@ const htmlmin = require("gulp-html-minifier");
 const uglify = require("gulp-uglify-es").default;
 const sass = require("gulp-sass")(require("sass"));
 const gcmq = require("gulp-group-css-media-queries");
-const shorthand = require('gulp-shorthand');
 const postcss = require("gulp-postcss");
 const autoprefixer = require("gulp-autoprefixer");
-const plumber = require("gulp-plumber"); // Отслеживание ошибок
+const plumber = require("gulp-plumber");
 const notify = require("gulp-notify");
 const sourcemaps = require("gulp-sourcemaps");
-const fileinclude = require("gulp-file-include");
 const rename = require("gulp-rename");
 const del = require("del");
+const pug = require("gulp-pug");
 const bs = require("browser-sync").create();
 
-const srcPath = 'src/';
-const wwwPath = 'www/';
+const srcPath = "src/";
+const wwwPath = "www/";
 
 const path = {
   build: {
@@ -24,25 +23,49 @@ const path = {
     css: `${wwwPath}css`,
   },
   src: {
-    html: `${srcPath}*.html`,
+    html: `${srcPath}pug/pages/**/*.pug`,
     js: `${srcPath}js/*.js`,
     css: `${srcPath}scss/*.scss`,
   },
   watch: {
-    html: `${srcPath}**/*.html`,
+    html: `${srcPath}pug/pages/**/*.pug`,
     js: `${srcPath}**/*.js`,
     css: `${srcPath}**/*.scss`,
   },
   clean: wwwPath,
   srcPath: srcPath,
   wwwPath: wwwPath,
-}
+};
 
 // html
+// const pages = () => {
+//   return (
+//     src(path.src.html)
+//       .pipe(fileinclude())
+//       // .pipe(htmlmin({collapseWhitespace: true}))
+//       .pipe(dest(path.build.html))
+//       .pipe(bs.stream())
+//   );
+// };
+
+// pug
 const pages = () => {
   return (
     src(path.src.html)
-      .pipe(fileinclude())
+    .pipe(
+      plumber({
+        errorHandler: notify.onError(function (err) {
+          return {
+            title: "Pug",
+            sound: false,
+            message: err.message,
+          };
+        }),
+      })
+    )
+      .pipe(pug({
+        pretty: true
+      }))
       // .pipe(htmlmin({collapseWhitespace: true}))
       .pipe(dest(path.build.html))
       .pipe(bs.stream())
@@ -76,17 +99,17 @@ const styles = () => {
         })
       )
       .pipe(sourcemaps.init())
-      .pipe(sass({
-        indentType: "tab",
-        indentWidth: 1,
-        outputStyle: "expanded",
-      }))
+      .pipe(
+        sass({
+          indentType: "tab",
+          indentWidth: 1,
+          outputStyle: "expanded",
+        })
+      )
       .pipe(gcmq())
       .pipe(autoprefixer(["last 15 versions"]))
-      .pipe(shorthand())
       .pipe(sourcemaps.write())
       // .pipe(rename('style.min.css'))
-      
       .pipe(dest(path.build.css))
       .pipe(bs.stream())
   );
@@ -111,8 +134,11 @@ const clean = () => {
   return del(path.clean);
 };
 
-const build = series(clean, parallel(server,pages, scripts, styles,watchers));
+const build = series(clean, parallel(server, pages, scripts, styles, watchers));
 
 exports.build = build;
 
-exports.default = series(clean, parallel(server,pages, scripts, styles,watchers));
+exports.default = series(
+  clean,
+  parallel(server, pages, scripts, styles, watchers)
+);
