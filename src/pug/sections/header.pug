@@ -1,0 +1,8 @@
+- var menuItems = ["Главная", "О школе", "Категории", "Цены", "Акции", "Контакты"]
+
+header.header 
+    nav.nav 
+        ul.nav__list 
+            each value in menuItems 
+                li.nav__item
+                    a.nav__list(href="#") #{value}

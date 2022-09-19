@@ -1,15 +1,11 @@
-- var pageTitle = "Главная";
-- var lang = "ru"
+extends layouts/master
 
-doctype html
-html(lang=lang)
-    head
-        meta(charset="UTF-8")
-        meta(http-equiv="X-UA-Compatible", content="IE=edge")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        link(rel="stylesheet", href="css/style.css")
-        title #{pageTitle}
-    body 
-        .header 
-            h1 Hello froms PUG!!
-    include pages/head
+include mixins/mixins
+
+block variables
+    - var title = "Главная";
+    - var description = "Lorem10";
+
+block content
+    +card("https://palladi.ru/upload/iblock/92a/92a4c80a6cb802f38ac3a7fb3ea82d29.jpg", "Bueno","Sueno", 80)
+    +card("https://palladi.ru/upload/iblock/92a/92a4c80a6cb802f38ac3a7fb3ea82d29.jpg", "Bueno","Sueno", 80)

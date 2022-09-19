@@ -23,12 +23,12 @@ const path = {
     css: `${wwwPath}css`,
   },
   src: {
-    html: `${srcPath}pug/pages/**/*.pug`,
+    html: `${srcPath}pug/*.pug`,
     js: `${srcPath}js/*.js`,
     css: `${srcPath}scss/*.scss`,
   },
   watch: {
-    html: `${srcPath}pug/pages/**/*.pug`,
+    html: `${srcPath}pug/**/*.pug`,
     js: `${srcPath}**/*.js`,
     css: `${srcPath}**/*.scss`,
   },
