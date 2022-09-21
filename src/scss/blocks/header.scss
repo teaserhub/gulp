@@ -25,8 +25,6 @@
     display: block;
     // @include fonts(20, #fff);
     font-weight: 500;
-    font-style: italic;
-    @extend %tplborder;
     margin-top: 10px;
     &--block {
         display: flex;
@@ -34,4 +32,8 @@
     @media (max-width: 920px) {
         width: 80%;
     }
+}
+
+.active {
+    font-weight: bold;
 }

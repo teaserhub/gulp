@@ -1,8 +1,15 @@
 extends layouts/master
 
 block variables
-    - var title = "Блог";
+    - var title = "Блоf";
     - var description = "Loremblog";
+    - var currentURL = "blog.html";
+
+append styles 
+    link(rel="stylesheet", href="font.css")
 
 block content 
     h1 Blog
+
+block scripts 
+    script(src="js/slider.js") 

@@ -3,6 +3,13 @@
 header.header 
     nav.nav 
         ul.nav__list 
-            each value in menuItems 
+                li.nav__item: a.nav__link(href="index.html" class={active: currentURL == 'index.html'}) Главна
                 li.nav__item
-                    a.nav__list(href="#") #{value}
+                    a.nav__link.nav__link--drop(href="#") О школе
+                    ul.nav__list.nav__list-dropdown
+                        li.nav__list: a.nav__link(href="#") Документы
+                        li.nav__list: a.nav__link(href="#") О школе
+                li.nav__item: a.nav__link(href="blog.html" class={active: currentURL == 'blog.html'}) Категории
+                li.nav__item: a.nav__link(href="#") Цены
+                li.nav__item: a.nav__link(href="#") Скидки
+                li.nav__item: a.nav__link(href="#") <b>Контакты</b>
