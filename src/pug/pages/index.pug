@@ -1,6 +1,6 @@
-extends layouts/master
+extends ../layouts/master
 
-include mixins/mixins
+include ../mixins/mixins
 
 block variables
     - var title = "Главнffая";
@@ -8,11 +8,11 @@ block variables
     - var currentURL = "index.html";
 
 block content
-    input(
-        type="text"
-        placeholder="Name"
-        required="required"
-        ).input__class
+    //- input(
+    //-     type="text"
+    //-     placeholder="Name"
+    //-     required="required"
+    //-     ).input__class
     main.main 
         section.section 
             p. 

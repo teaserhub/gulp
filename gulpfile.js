@@ -23,7 +23,7 @@ const path = {
     css: `${wwwPath}css`,
   },
   src: {
-    html: `${srcPath}pug/*.pug`,
+    html: `${srcPath}pug/pages/*.pug`,
     js: `${srcPath}js/*.js`,
     css: `${srcPath}scss/*.scss`,
   },
