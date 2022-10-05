@@ -3,7 +3,7 @@ extends ../layouts/master
 include ../mixins/mixins
 
 block variables
-    - var title = "Главнffая";
+    - var title = "Главная";
     - var description = "Lorem10";
     - var currentURL = "index.html";
 
@@ -19,4 +19,8 @@ block content
                 Lorem, ipsum  <b>dolor</b> sit amet 
                 consectetur #[em adipisicing] elit. Esse, explicabo?
             a.link__class(href="#" target="_blank" rel="nofollow") Link
+    .cards
+        +card('https://cdn-icons-png.flaticon.com/512/8534/8534914.png','мышь','мышь', 5)
+        +card('https://cdn-icons-png.flaticon.com/512/8534/8534935.png','кот','кот', 15)
+        +card('https://cdn-icons-png.flaticon.com/512/8534/8534936.png','овца','овца', 25)
 
